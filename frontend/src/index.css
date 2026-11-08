@@ -1,0 +1,236 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f6f1e6;
+  --color-paper2: #fffdf8;
+  --color-paper3: #efe7d7;
+  --color-ink: #141518;
+  --color-ink2: #2b2c31;
+  --color-muted: #6d6a62;
+  --color-line: #d9d0bf;
+  --color-line2: #bfb39d;
+  --color-red: #e4002b;
+  --color-red2: #b00020;
+  --color-yellow: #ffe8a3;
+  --color-yellow2: #f6c945;
+  --color-blue: #c9dff5;
+  --color-blue2: #2f5f9e;
+  --color-green: #1f7a5c;
+  --color-green2: #d9efe4;
+  --color-cream: #fff7e0;
+  --font-display: "Archivo", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-paper);
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Grano de papel: textura fija, casi imperceptible, sobre toda la app. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--color-red);
+  color: var(--color-paper2);
+}
+
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: var(--color-paper3); }
+::-webkit-scrollbar-thumb { background: var(--color-line2); border: 3px solid var(--color-paper3); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-ink2); }
+
+:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 3px;
+}
+
+/* ───────────────────────── Tipografía y superficies ───────────────────────── */
+.font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-mono); }
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.surface {
+  background: var(--color-paper2);
+  border: 1px solid var(--color-line);
+}
+
+.card {
+  background: var(--color-paper2);
+  border: 1px solid var(--color-line);
+  border-radius: 2px;
+  box-shadow: 4px 4px 0 0 rgba(20, 21, 24, 0.06);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.card-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 0 rgba(20, 21, 24, 0.1);
+  border-color: var(--color-line2);
+}
+
+.card-ink {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: 1px solid var(--color-ink);
+  border-radius: 2px;
+}
+
+.rule { border-top: 1px solid var(--color-line); }
+.rule-strong { border-top: 1px solid var(--color-ink); }
+
+.stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1.5px solid var(--color-red);
+  color: var(--color-red);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  transform: rotate(-1.5deg);
+}
+
+.tape {
+  background: var(--color-yellow);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(20, 21, 24, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 21, 24, 0.055) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.bg-grid-dark {
+  background-image:
+    linear-gradient(to right, rgba(246, 241, 230, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(246, 241, 230, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ───────────────────────── Movimiento ───────────────────────── */
+@keyframes deriva {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(3%, -4%, 0) scale(1.06); }
+  66% { transform: translate3d(-3%, 3%, 0) scale(0.97); }
+}
+
+@keyframes flotar {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1.5deg); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes pulso {
+  0%, 100% { opacity: 0.35; transform: scale(0.92); }
+  50% { opacity: 0.9; transform: scale(1.08); }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  15% { opacity: 0.35; }
+  85% { opacity: 0.35; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.blob { animation: deriva 18s ease-in-out infinite; }
+.blob-slow { animation: deriva 26s ease-in-out infinite reverse; }
+.flotar { animation: flotar 7s ease-in-out infinite; }
+.pulso { animation: pulso 3.4s ease-in-out infinite; }
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+.scanline {
+  animation: scan 7s ease-in-out infinite;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--color-paper3) 25%, #f8f3e9 50%, var(--color-paper3) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+/* ───────────────────────── Detalles editoriales ───────────────────────── */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 200ms ease;
+}
+.link-underline:hover { background-size: 100% 1px; }
+
+.prose-sarcol p { margin-bottom: 0.9rem; line-height: 1.75; }
+.prose-sarcol p:last-child { margin-bottom: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
